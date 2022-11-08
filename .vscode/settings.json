@@ -1,0 +1,4 @@
+{
+  "standard.run": "onType",
+  "standard.engine": "ts-standard"
+}

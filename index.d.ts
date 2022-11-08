@@ -9,14 +9,14 @@ type Json =
 
 type TProductId = string
 
-type TProductAttributes = {
+interface TProductAttributes {
   description: string
   shape: string
   hardiness: string
   taste: string
 }
 
-type TProduct = {
+interface TProduct {
   id: TProductId
   name: string
   sku: string
@@ -27,7 +27,7 @@ type TProduct = {
 
 type TAPIAVODetailResponse = TProduct
 
-type TAPIAvoResponse = {
+interface TAPIAvoResponse {
   lenght: number
   data: TProduct[]
   error?: string
