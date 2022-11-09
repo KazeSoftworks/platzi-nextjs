@@ -27,7 +27,7 @@ border-top: 1em solid #efefef;
 
 const ProductCard = ({ item }: Props): JSX.Element => {
   return (
-    <Link href={`/product/${item.id}`} legacyBehavior>
+    <Link href={`/product/${item.id}`} legacyBehavior passHref>
       <Card>
         <img src={item.image} />
         <Description>

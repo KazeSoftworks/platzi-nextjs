@@ -11,7 +11,7 @@ gap: 2em;
 border-top: 0.25em solid #efefef;
 flex-wrap: wrap;
 `
-const AttributionBox = styled.a`
+const AttributionBox = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -40,7 +40,7 @@ height: 2em;
 p {
 margin: 0
 }
-a {
+a, a:visited, a:hover, a:active {
 color: #2c95e0;
 }
 `

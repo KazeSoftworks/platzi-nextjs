@@ -28,7 +28,7 @@ const ProductList = (): JSX.Element => {
   return (
     <Container>
       <List>
-        {productList.map((product) => {
+        {productList.length > 0 && productList.map((product) => {
           return <ProductCard key={product.id} item={product} />
         })}
       </List>
