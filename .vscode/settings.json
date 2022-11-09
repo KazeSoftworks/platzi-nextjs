@@ -1,4 +1,5 @@
 {
   "standard.run": "onType",
-  "standard.engine": "ts-standard"
+  "standard.engine": "ts-standard",
+  "reactSnippets.settings.importReactOnTop": false
 }
