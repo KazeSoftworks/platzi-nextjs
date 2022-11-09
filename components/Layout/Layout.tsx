@@ -1,10 +1,10 @@
-import Navbar from '@components/Navbar/Navbar'
+import Header from '@components/Header/Header'
 import React from 'react'
 
 const Layout = ({ children }: { children: React.ReactNode }): JSX.Element => {
   return (
     <div>
-      <Navbar />
+      <Header />
       {children}
       <footer>this is the footer</footer>
     </div>
