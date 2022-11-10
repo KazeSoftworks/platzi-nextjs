@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, FocusEvent, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import Image from 'next/image'
@@ -64,18 +64,55 @@ tbody{
 }
 `
 
-const AddToCartButton = styled.button`
-  
+const AddToCartContainer = styled.div`
+  width: 100%;
+  height: 2.5em;
+  input, button{
+    height: 100%;
+  }
+  input {
+    width: 65%;
+    padding: 0.75em;
+    border-radius: 5px 0 0 5px;
+    border: 1px solid grey;
+    border-right-style: none;
+    box-shadow: none;
+    &:focus {
+        outline: none;
+        box-shadow: 0px 0px 2px green;
+    }
+  }
+  button{
+    width: 35%;
+    border: none;
+    background-color: #21b421;
+    color: white;
+    font-weight: bold;
+    border-radius: 0 5px 5px 0;
+    border:none;
+    cursor: pointer;
+  }
 `
 
 const ProductPage = (): JSX.Element => {
   const [product, setProduct] = useState<TProduct | null>(null)
+  const [amount, setAmount] = useState(1)
   const [, addToCart] = useAtom(addToCartAtom)
   const router = useRouter()
   const { id } = router.query
 
   const handleAddToCart = (): void => {
-    if (product != null) addToCart(product?.id)
+    if (product != null) addToCart({ productId: product?.id, amount })
+  }
+
+  const handleChangeAmount = (event: ChangeEvent<HTMLInputElement>): void => {
+    const { valueAsNumber } = event.target
+    setAmount(valueAsNumber)
+  }
+
+  const handleOnBlur = (event: FocusEvent<HTMLInputElement>): void => {
+    const { valueAsNumber } = event.target
+    if (valueAsNumber <= 0)setAmount(1)
   }
 
   useEffect(() => {
@@ -99,7 +136,10 @@ const ProductPage = (): JSX.Element => {
               <h1>{product.name}</h1>
               <p>$ {product.price}</p>
               <Sku>SKU: {product.sku}</Sku>
-              <AddToCartButton onClick={handleAddToCart}>Add to cart</AddToCartButton>
+              <AddToCartContainer>
+                <input type='number' value={amount} onChange={handleChangeAmount} onBlur={handleOnBlur} />
+                <button onClick={handleAddToCart}>Add to Cart</button>
+              </AddToCartContainer>
             </ProductItemDescriptor>
           </ProductItem>
           <ProductDescription>
