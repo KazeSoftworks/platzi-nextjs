@@ -2,6 +2,7 @@ import Layout from '@components/Layout/Layout'
 import { AppProps } from 'next/app'
 import { createGlobalStyle } from 'styled-components'
 import { Lato } from '@next/font/google'
+import { Provider } from 'jotai'
 
 const lato = Lato({ weight: '400' })
 const GlobalStyles = createGlobalStyle`
@@ -25,11 +26,11 @@ export default function MyApp ({ Component, pageProps }: AppProps): JSX.Element 
   // Layout
   // props adicionales
   return (
-    <>
+    <Provider>
       <GlobalStyles />
       <Layout>
         <Component {...pageProps} />
       </Layout>
-    </>
+    </Provider>
   )
 }

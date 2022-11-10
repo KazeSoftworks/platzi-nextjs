@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useAtom } from 'jotai'
+import { useEffect } from 'react'
+import { getProductListAtom, productListAtom } from 'store/productList'
 import styled from 'styled-components'
 import ProductCard from './ProductCard'
 
@@ -15,16 +17,14 @@ const List = styled.div`
 `
 
 const ProductList = (): JSX.Element => {
-  const [productList, setProductList] = useState<TProduct[]>([])
+  const [productList] = useAtom(productListAtom)
+  const [,getProductList] = useAtom(getProductListAtom)
 
   useEffect(() => {
-    fetch('/api/avo')
-      .then(async (response) => await response.json())
-      .then(({ data, length }) => {
-        setProductList(data)
-      })
-      .catch((error) => console.error(error))
-  }, [])
+    getProductList().catch((e) => {
+      console.error(e)
+    })
+  }, [getProductList])
   return (
     <Container>
       <List>

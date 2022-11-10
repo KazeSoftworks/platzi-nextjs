@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import Image from 'next/image'
+import { useAtom } from 'jotai'
+import { addToCartAtom } from 'store/cart'
 
 const ProductContainer = styled.main`
 max-width: 700px;
@@ -62,10 +64,19 @@ tbody{
 }
 `
 
+const AddToCartButton = styled.button`
+  
+`
+
 const ProductPage = (): JSX.Element => {
   const [product, setProduct] = useState<TProduct | null>(null)
+  const [, addToCart] = useAtom(addToCartAtom)
   const router = useRouter()
   const { id } = router.query
+
+  const handleAddToCart = (): void => {
+    if (product != null) addToCart(product?.id)
+  }
 
   useEffect(() => {
     if (id !== 'undefined') {
@@ -88,6 +99,7 @@ const ProductPage = (): JSX.Element => {
               <h1>{product.name}</h1>
               <p>$ {product.price}</p>
               <Sku>SKU: {product.sku}</Sku>
+              <AddToCartButton onClick={handleAddToCart}>Add to cart</AddToCartButton>
             </ProductItemDescriptor>
           </ProductItem>
           <ProductDescription>

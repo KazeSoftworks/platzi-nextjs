@@ -25,10 +25,28 @@ interface TProduct {
   attributes: TProductAttributes
 }
 
+interface TCartResult extends TProduct {
+  amount: number
+}
+
+interface TCartResponse {
+  items: TCartResult[]
+  count: number
+  total: string
+}
+
 type TAPIAVODetailResponse = TProduct
 
 interface TAPIAvoResponse {
   lenght: number
   data: TProduct[]
   error?: string
+}
+
+interface TCart {
+  [key: TProductId]: number
+}
+
+interface TAPIProductsResponse {
+  [id: TProductId]: TProduct
 }
