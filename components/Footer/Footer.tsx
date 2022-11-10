@@ -26,7 +26,7 @@ font-size: 0.65em;
 const FooterGrid = styled.div`
 display: flex;
 justify-content: space-evenly;
-width: 80%;
+width: 50em;
 padding: 0 4em 0 4em;
 `
 
@@ -65,6 +65,7 @@ const Footer = (): JSX.Element => {
       <AttributionBox>
         <AttributionLink href='https://www.flaticon.com/free-icons/avocado' title='avocado and shopping icons attribution'>Avocado and Shopping cart icon created by amonrat rungreangfangsai - Flaticon</AttributionLink>
         <AttributionLink href='https://www.californiaavocado.com/' title='avocado images attribution'>Avocado images taken from Avocado 101 at California Avocado</AttributionLink>
+        <AttributionLink href='https://lottiefiles.com/CHITTA' title='excersice avocado'>Animation of Avocado doing excersie by Chitta Shanmukha in LottieFiles</AttributionLink>
       </AttributionBox>
     </FooterContainer>
   )
