@@ -30,7 +30,7 @@ menu {
 const StyledLink = styled.a<RouterProps>`
   display: flex;
   justify-content: center;
-  width: 10em;
+  width: 12em;
   align-items: center;
   height: 100%;
   gap: 0.25em;
