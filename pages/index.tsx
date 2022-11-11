@@ -26,7 +26,7 @@ const Banner = styled.div`
   }
 `
 
-export async function getServerSideProps (): Promise<{
+export async function getStaticProps (): Promise<{
   props: {
     productList: TProduct[]
   }
