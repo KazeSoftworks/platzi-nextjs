@@ -1,9 +1,12 @@
-import React, { ChangeEvent, FocusEvent, useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
+import React, { ChangeEvent, FocusEvent, useState } from 'react'
+import { GetStaticProps } from 'next'
 import styled from 'styled-components'
 import Image from 'next/image'
 import { useAtom } from 'jotai'
 import { addToCartAtom } from 'store/cart'
+// Pagina dinamica - el id tiene que ser generado de alguna manera
+// Cuales son todas las paginas, deben ser en build time
+// debe saber cuantas paginas se necesitan
 
 const ProductContainer = styled.main`
 max-width: 700px;
@@ -94,12 +97,47 @@ const AddToCartContainer = styled.div`
   }
 `
 
-const ProductPage = (): JSX.Element => {
-  const [product, setProduct] = useState<TProduct | null>(null)
+export const getStaticPaths = async (): Promise<{
+  paths: Array<{
+    params: {
+      id: string
+    }
+  }>
+  fallback: boolean
+}> => {
+  const response = await fetch('https://platzi-avo.vercel.app/api/avo')
+  const { data: productList }: TAPIAvoResponse = await response.json()
+
+  const paths = productList.map(({ id }) => {
+    return { params: { id } }
+  })
+
+  return {
+    paths,
+    // incremental static generation
+    // 404 for everything
+    fallback: false
+  }
+}
+
+export const getStaticProps: GetStaticProps = async ({ params }): Promise<{
+  props: {
+    product: TProduct
+  }
+}> => {
+  const id = params?.id as string // optional chaining
+  const response = await fetch(`https://platzi-avo.vercel.app/api/avo/${id}`)
+  const product: TProduct = await response.json()
+  return {
+    props: {
+      product
+    }
+  }
+}
+
+const ProductPage = ({ product }: { product: TProduct }): JSX.Element => {
   const [amount, setAmount] = useState(1)
   const [, addToCart] = useAtom(addToCartAtom)
-  const router = useRouter()
-  const { id } = router.query
 
   const handleAddToCart = (): void => {
     if (product != null) addToCart({ productId: product?.id, amount })
@@ -114,17 +152,6 @@ const ProductPage = (): JSX.Element => {
     const { valueAsNumber } = event.target
     if (valueAsNumber <= 0)setAmount(1)
   }
-
-  useEffect(() => {
-    if (id !== 'undefined') {
-      fetch(`/api/avo/${id as string}`)
-        .then(async (response) => await response.json())
-        .then((data) => {
-          setProduct(data)
-        })
-        .catch((error) => console.error(error))
-    }
-  }, [id])
 
   return (
     <ProductContainer>
