@@ -26,7 +26,21 @@ const Banner = styled.div`
   }
 `
 
-const HomePage = (): JSX.Element => {
+export async function getServerSideProps (): Promise<{
+  props: {
+    productList: TProduct[]
+  }
+}> {
+  const response = await fetch('https://platzi-avo.vercel.app/api/avo')
+  const { data: productList }: TAPIAvoResponse = await response.json()
+  return {
+    props: {
+      productList
+    }
+  }
+}
+
+const HomePage = ({ productList }: { productList: TProduct[] }): JSX.Element => {
   return (
     <>
       <Banner>
@@ -41,7 +55,7 @@ const HomePage = (): JSX.Element => {
         </h1>
         <p>What avocado would you like today?</p>
       </Banner>
-      <ProductList />
+      <ProductList productList={productList} />
     </>
   )
 }

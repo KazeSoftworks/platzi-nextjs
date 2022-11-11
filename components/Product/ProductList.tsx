@@ -1,6 +1,3 @@
-import { useAtom } from 'jotai'
-import { useEffect } from 'react'
-import { getProductListAtom, productListAtom } from 'store/productList'
 import styled from 'styled-components'
 import ProductCard from './ProductCard'
 
@@ -16,15 +13,7 @@ const List = styled.div`
   margin: 0 10em 0 10em;
 `
 
-const ProductList = (): JSX.Element => {
-  const [productList] = useAtom(productListAtom)
-  const [,getProductList] = useAtom(getProductListAtom)
-
-  useEffect(() => {
-    getProductList().catch((e) => {
-      console.error(e)
-    })
-  }, [getProductList])
+const ProductList = ({ productList }: { productList: TProduct[] }): JSX.Element => {
   return (
     <Container>
       <List>
